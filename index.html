@@ -224,6 +224,187 @@
       font-size: 0.95rem;
     }
 
+    /* ===== تواصل معنا ===== */
+    .contact {
+      background: linear-gradient(160deg, var(--mauve) 0%, var(--offwhite) 45%, var(--pink) 100%);
+    }
+
+    .contact-intro {
+      margin: -8px auto 26px;
+      max-width: 520px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .contact-form {
+      background: var(--card);
+      border: 1px solid #f0e4ea;
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      box-shadow: 0 4px 14px rgba(155, 127, 181, 0.08);
+      display: grid;
+      gap: 14px;
+    }
+
+    .field { display: grid; gap: 6px; }
+
+    .field label {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .field label .req { color: var(--pink-deep); }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      font: inherit;
+      color: var(--ink);
+      background: var(--offwhite);
+      border: 1.5px solid #e8dce4;
+      border-radius: 12px;
+      padding: 11px 14px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .field select {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%239b7fb5' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: left 14px center;
+      padding-left: 38px;
+    }
+
+    .field textarea { min-height: 120px; resize: vertical; }
+
+    .field input::placeholder,
+    .field textarea::placeholder { color: #a99fb0; }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--mauve-deep);
+      box-shadow: 0 0 0 4px rgba(155, 127, 181, 0.18);
+    }
+
+    .field input[aria-invalid="true"],
+    .field textarea[aria-invalid="true"] {
+      border-color: #d9657f;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .submit {
+      margin-top: 4px;
+      background: var(--mauve-deep);
+      color: #fff;
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 26px;
+      font: inherit;
+      font-weight: 800;
+      font-size: 1.05rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .submit:hover,
+    .submit:focus-visible {
+      background: #8a6ea6;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 22px rgba(155, 127, 181, 0.3);
+      outline: none;
+    }
+
+    .form-status {
+      margin: 0;
+      min-height: 1.4em;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--mauve-deep);
+      text-align: center;
+    }
+
+    .form-status.error { color: #c24a68; }
+
+    .contact-side {
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-box {
+      background: var(--card);
+      border: 1px solid #f0e4ea;
+      border-radius: var(--radius);
+      padding: 20px 18px;
+      box-shadow: 0 4px 14px rgba(155, 127, 181, 0.08);
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      color: inherit;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    a.contact-box[href]:hover,
+    a.contact-box[href]:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(155, 127, 181, 0.18);
+      border-color: var(--pink-deep);
+      outline: none;
+    }
+
+    .contact-box .icon {
+      flex: none;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--pink);
+      color: var(--mauve-deep);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    .contact-box h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--mauve-deep);
+    }
+
+    .contact-box p {
+      margin: 2px 0 0;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .contact-box .note {
+      font-weight: 400;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
     /* ===== الفوتر ===== */
     footer {
       padding: 26px 0;
@@ -368,12 +549,15 @@
     @media (min-width: 600px) {
       .grid { grid-template-columns: repeat(2, 1fr); }
       .info-grid { grid-template-columns: repeat(2, 1fr); }
+      .field-row { grid-template-columns: repeat(2, 1fr); }
+      .contact-form { padding: 28px 26px; }
       .brand { font-size: 3.2rem; }
     }
 
     @media (min-width: 900px) {
       .grid { grid-template-columns: repeat(4, 1fr); }
       .hero { padding: 72px 0 60px; }
+      .contact-grid { grid-template-columns: 1.6fr 1fr; gap: 24px; }
     }
   </style>
 </head>
@@ -479,6 +663,83 @@
         </div>
       </div>
     </section>
+
+    <section class="contact" id="contact">
+      <div class="wrap">
+        <h2>تواصل معنا</h2>
+        <p class="contact-intro">
+          عندك استفسار عن موديل أو مقاس؟ ابعتي لنا رسالتك وهنرد عليكي في أقرب وقت.
+        </p>
+
+        <div class="contact-grid">
+
+          <form class="contact-form" id="contact-form" novalidate>
+            <div class="field-row">
+              <div class="field">
+                <label for="c-name">الاسم <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="c-name" name="name" autocomplete="name" placeholder="اكتبي اسمك" required>
+              </div>
+              <div class="field">
+                <label for="c-phone">رقم الموبايل <span class="req" aria-hidden="true">*</span></label>
+                <input type="tel" id="c-phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="01xxxxxxxxx" dir="ltr" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="c-topic">موضوع الرسالة</label>
+              <select id="c-topic" name="topic">
+                <option value="استفسار عن فستان">استفسار عن فستان</option>
+                <option value="السؤال عن مقاس">السؤال عن مقاس</option>
+                <option value="حجز أو طلب">حجز أو طلب</option>
+                <option value="اقتراح أو شكوى">اقتراح أو شكوى</option>
+                <option value="أخرى">أخرى</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="c-msg">رسالتك <span class="req" aria-hidden="true">*</span></label>
+              <textarea id="c-msg" name="message" placeholder="اكتبي رسالتك هنا…" required></textarea>
+            </div>
+
+            <button class="submit" type="submit">
+              <span aria-hidden="true">💬</span>
+              <span>إرسال عبر واتساب</span>
+            </button>
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          </form>
+
+          <aside class="contact-side">
+            <a class="contact-box" id="contact-wa" href="#" target="_blank" rel="noopener">
+              <span class="icon" aria-hidden="true">💬</span>
+              <div>
+                <h3>واتساب</h3>
+                <p id="contact-wa-text">كلمينا على واتساب</p>
+                <span class="note">الرد في مواعيد العمل</span>
+              </div>
+            </a>
+
+            <a class="contact-box" id="contact-phone" href="#">
+              <span class="icon" aria-hidden="true">📞</span>
+              <div>
+                <h3>اتصلي بينا</h3>
+                <p id="contact-phone-text" dir="ltr"></p>
+                <span class="note">من 3 إلى 9 كل يوم</span>
+              </div>
+            </a>
+
+            <div class="contact-box">
+              <span class="icon" aria-hidden="true">📍</span>
+              <div>
+                <h3>المحل</h3>
+                <p>بورسعيد – شارع 13</p>
+                <span class="note">نورينا في أي وقت</span>
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -529,6 +790,19 @@
       winter:      [],   // فساتين شتوية         → images/winter/
       sisters:     [],   // فساتين للأخوات       → images/sisters/
       accessories: [],   // إكسسوارات            → images/accessories/
+    };
+
+    /* =====================================================================
+       بيانات التواصل
+       ---------------------------------------------------------------------
+       اكتب رقم الواتساب بصيغة دولية من غير + ولا مسافات (مصر تبدأ بـ 20):
+         whatsapp: "201001234567",
+       فورم «تواصل معنا» بيفتح واتساب على الرقم ده والرسالة جاهزة.
+       phone: رقم الاتصال اللي يظهر للزوار (ممكن يكون نفس الرقم).
+       ===================================================================== */
+    const CONTACT = {
+      whatsapp: "",   // مثال: "201001234567"
+      phone:    "",   // مثال: "01001234567"
     };
 
     /* ===== من هنا لتحت مفيش حاجة محتاجة تعديل ===== */
@@ -619,6 +893,80 @@
         // في RTL: السحب لليمين = الصورة التالية
         if (dx > 0) next(); else prev();
       }, { passive: true });
+    })();
+
+    /* ===== فورم تواصل معنا ===== */
+    (function () {
+      const form   = document.getElementById("contact-form");
+      const status = document.getElementById("form-status");
+      const waBox  = document.getElementById("contact-wa");
+      const waText = document.getElementById("contact-wa-text");
+      const phBox  = document.getElementById("contact-phone");
+      const phText = document.getElementById("contact-phone-text");
+
+      const wa = String(CONTACT.whatsapp || "").replace(/\D/g, "");
+      const phone = String(CONTACT.phone || "").trim();
+
+      // كروت التواصل الجانبية
+      if (wa) {
+        waBox.href = "https://wa.me/" + wa;
+      } else {
+        waBox.removeAttribute("href");
+        waText.textContent = "رقم الواتساب هيتضاف قريبًا";
+      }
+
+      if (phone) {
+        phBox.href = "tel:" + phone.replace(/\s+/g, "");
+        phText.textContent = phone;
+      } else {
+        phBox.removeAttribute("href");
+        phText.textContent = "الرقم هيتضاف قريبًا";
+        phText.removeAttribute("dir");
+      }
+
+      function setStatus(msg, isError) {
+        status.textContent = msg;
+        status.classList.toggle("error", !!isError);
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name  = form.name.value.trim();
+        const tel   = form.phone.value.trim();
+        const topic = form.topic.value;
+        const msg   = form.message.value.trim();
+
+        [form.name, form.phone, form.message].forEach(function (el) { el.removeAttribute("aria-invalid"); });
+
+        let bad = null;
+        if (!name) bad = form.name;
+        else if (!/^[0-9+\s-]{8,}$/.test(tel)) bad = form.phone;
+        else if (!msg) bad = form.message;
+
+        if (bad) {
+          bad.setAttribute("aria-invalid", "true");
+          bad.focus();
+          setStatus(bad === form.phone ? "من فضلك اكتبي رقم موبايل صحيح." : "من فضلك كملي الخانات المطلوبة.", true);
+          return;
+        }
+
+        if (!wa) {
+          setStatus("رقم الواتساب لسه ماتضافش للموقع. ممكن تزورينا في المحل.", true);
+          return;
+        }
+
+        const text =
+          "مرحبًا لوليتا 👋\n" +
+          "الاسم: " + name + "\n" +
+          "الموبايل: " + tel + "\n" +
+          "الموضوع: " + topic + "\n" +
+          "الرسالة: " + msg;
+
+        window.open("https://wa.me/" + wa + "?text=" + encodeURIComponent(text), "_blank", "noopener");
+        setStatus("تم تجهيز رسالتك على واتساب، اضغطي إرسال هناك ✅", false);
+        form.reset();
+      });
     })();
   </script>
 
