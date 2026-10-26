@@ -327,7 +327,14 @@
       transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .submit:hover,
+    .submit:disabled {
+      opacity: 0.6;
+      cursor: progress;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .submit:not(:disabled):hover,
     .submit:focus-visible {
       background: #8a6ea6;
       transform: translateY(-1px);
@@ -679,33 +686,22 @@
             <div class="field-row">
               <div class="field">
                 <label for="c-name">الاسم <span class="req" aria-hidden="true">*</span></label>
-                <input type="text" id="c-name" name="name" autocomplete="name" placeholder="اكتبي اسمك" required>
+                <input type="text" id="c-name" name="name" autocomplete="name" placeholder="اكتبي اسمك" maxlength="100" required>
               </div>
               <div class="field">
                 <label for="c-phone">رقم الموبايل <span class="req" aria-hidden="true">*</span></label>
-                <input type="tel" id="c-phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="01xxxxxxxxx" dir="ltr" required>
+                <input type="tel" id="c-phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="01xxxxxxxxx" dir="ltr" maxlength="20" required>
               </div>
-            </div>
-
-            <div class="field">
-              <label for="c-topic">موضوع الرسالة</label>
-              <select id="c-topic" name="topic">
-                <option value="استفسار عن فستان">استفسار عن فستان</option>
-                <option value="السؤال عن مقاس">السؤال عن مقاس</option>
-                <option value="حجز أو طلب">حجز أو طلب</option>
-                <option value="اقتراح أو شكوى">اقتراح أو شكوى</option>
-                <option value="أخرى">أخرى</option>
-              </select>
             </div>
 
             <div class="field">
               <label for="c-msg">رسالتك <span class="req" aria-hidden="true">*</span></label>
-              <textarea id="c-msg" name="message" placeholder="اكتبي رسالتك هنا…" required></textarea>
+              <textarea id="c-msg" name="message" placeholder="اكتبي رسالتك هنا…" maxlength="2000" required></textarea>
             </div>
 
             <button class="submit" type="submit">
-              <span aria-hidden="true">💬</span>
-              <span>إرسال عبر واتساب</span>
+              <span aria-hidden="true">💌</span>
+              <span>إرسال</span>
             </button>
             <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
           </form>
@@ -804,12 +800,25 @@
        ---------------------------------------------------------------------
        اكتب رقم الواتساب بصيغة دولية من غير + ولا مسافات (مصر تبدأ بـ 20):
          whatsapp: "201001234567",
-       فورم «تواصل معنا» بيفتح واتساب على الرقم ده والرسالة جاهزة.
        phone: رقم الاتصال اللي يظهر للزوار (ممكن يكون نفس الرقم).
        ===================================================================== */
     const CONTACT = {
       whatsapp: "",   // مثال: "201001234567"
       phone:    "",   // مثال: "01001234567"
+    };
+
+    /* =====================================================================
+       Supabase – رسايل فورم «تواصل معنا» بتتحفظ في جدول messages
+       ---------------------------------------------------------------------
+       من لوحة Supabase → Project Settings → API Keys:
+         url:            رابط المشروع، زي "https://abcdefgh.supabase.co"
+         publishableKey: المفتاح اللي بيبدأ بـ sb_publishable_
+       ممنوع تحط هنا المفتاح الـ secret (sb_secret_…) أو service_role.
+       الجدول وصلاحياته في الملف supabase/messages.sql
+       ===================================================================== */
+    const SUPABASE = {
+      url:            "https://hzzklfmokqfmuaipemwg.supabase.co",
+      publishableKey: "sb_publishable_xUlQoz0vfMnDSeICdCOimA_M1ijdatx",
     };
 
     /* ===== من هنا لتحت مفيش حاجة محتاجة تعديل ===== */
@@ -958,19 +967,29 @@
         status.classList.toggle("error", !!isError);
       }
 
+      const sbUrl = String(SUPABASE.url || "").trim().replace(/\/+$/, "");
+      const sbKey = String(SUPABASE.publishableKey || "").trim();
+      // حماية: الصفحة بتشتغل بالمفتاح الـ publishable بس
+      const sbKeyIsSecret = /^sb_secret_/.test(sbKey) || /service_role/.test(atobSafe(sbKey.split(".")[1]));
+      const sbReady = !!(sbUrl && sbKey) && !sbKeyIsSecret;
+      const submitBtn = form.querySelector(".submit");
+
+      function atobSafe(part) {
+        try { return atob(String(part || "").replace(/-/g, "+").replace(/_/g, "/")); } catch (err) { return ""; }
+      }
+
       form.addEventListener("submit", function (e) {
         e.preventDefault();
 
-        const name  = form.name.value.trim();
-        const tel   = form.phone.value.trim();
-        const topic = form.topic.value;
-        const msg   = form.message.value.trim();
+        const name = form.name.value.trim();
+        const tel  = form.phone.value.trim().replace(/\s+/g, " ");
+        const msg  = form.message.value.trim();
 
         [form.name, form.phone, form.message].forEach(function (el) { el.removeAttribute("aria-invalid"); });
 
         let bad = null;
         if (!name) bad = form.name;
-        else if (!/^[0-9+\s-]{8,}$/.test(tel)) bad = form.phone;
+        else if (!/^[0-9+ -]{8,20}$/.test(tel)) bad = form.phone;
         else if (!msg) bad = form.message;
 
         if (bad) {
@@ -980,21 +999,36 @@
           return;
         }
 
-        if (!wa) {
-          setStatus("رقم الواتساب لسه ماتضافش للموقع. ممكن تزورينا في المحل.", true);
+        if (!sbReady) {
+          if (sbKeyIsSecret) console.error("SUPABASE.publishableKey فيه مفتاح secret – استعمل المفتاح الـ publishable بس.");
+          setStatus("الإرسال مش شغال دلوقتي. ممكن تكلمينا أو تزورينا في المحل.", true);
           return;
         }
 
-        const text =
-          "مرحبًا لوليتا 👋\n" +
-          "الاسم: " + name + "\n" +
-          "الموبايل: " + tel + "\n" +
-          "الموضوع: " + topic + "\n" +
-          "الرسالة: " + msg;
+        submitBtn.disabled = true;
+        setStatus("جاري الإرسال…", false);
 
-        window.open("https://wa.me/" + wa + "?text=" + encodeURIComponent(text), "_blank", "noopener");
-        setStatus("تم تجهيز رسالتك على واتساب، اضغطي إرسال هناك ✅", false);
-        form.reset();
+        fetch(sbUrl + "/rest/v1/messages", {
+          method: "POST",
+          headers: {
+            "apikey": sbKey,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal",   // مفيش صلاحية قراية، فمنطلبش الصف يرجع
+          },
+          body: JSON.stringify({ name: name, phone: tel, message: msg }),
+        })
+          .then(function (res) {
+            if (!res.ok) throw new Error("Supabase " + res.status);
+            form.reset();
+            setStatus("وصلتنا رسالتك، هنكلّمك في نفس اليوم.", false);
+          })
+          .catch(function (err) {
+            console.error(err);
+            setStatus("حصلت مشكلة في الإرسال، جربي تاني بعد شوية.", true);
+          })
+          .finally(function () {
+            submitBtn.disabled = false;
+          });
       });
     })();
   </script>
