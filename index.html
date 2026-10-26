@@ -493,6 +493,8 @@
       -webkit-user-drag: none;
     }
 
+    .lb-img[hidden] { display: none; }
+
     .lb-empty {
       display: none;
       background: var(--card);
@@ -756,6 +758,7 @@
 
     <div class="lb-stage" id="lb-stage">
       <img class="lb-img" id="lb-img" src="" alt="">
+      <video class="lb-img" id="lb-video" controls playsinline preload="metadata" hidden></video>
       <div class="lb-empty">
         <strong>لسه مافيش صور لهذا القسم</strong>
         <span>هتتضاف قريبًا</span>
@@ -778,13 +781,17 @@
        مثال لقسم «فساتين يومية» لو حطيت فيه 3 صور:
          daily: ["images/daily/1.jpg", "images/daily/2.jpg", "images/daily/3.jpg"],
 
+       ممكن كمان تحط فيديوهات (mp4 أو webm) في نفس المصفوفة مع الصور.
+
        اسم الصورة حر (ممكن يكون بالعربي)، بس لازم يطابق اللي على الجهاز بالظبط.
        القسم اللي مصفوفته فاضية [] بيظهر رسالة «لسه مافيش صور».
        ===================================================================== */
     const GALLERY = {
       daily:       [],   // فساتين يومية        → images/daily/
       occasions:   [],   // فساتين مناسبات      → images/occasions/
-      birthday:    [],   // فساتين أعياد الميلاد → images/birthday/
+      birthday:    [     // فساتين أعياد الميلاد → images/birthday/
+        "images/birthday/ChatGPT Image 5 أكتوبر 2026، 12_16_16 ص.png",
+      ],
       eid:         [],   // فساتين العيد         → images/eid/
       summer:      [],   // فساتين صيفية         → images/summer/
       winter:      [],   // فساتين شتوية         → images/winter/
@@ -809,6 +816,7 @@
     (function () {
       const lb      = document.getElementById("lightbox");
       const img     = document.getElementById("lb-img");
+      const video   = document.getElementById("lb-video");
       const title   = document.getElementById("lb-title");
       const counter = document.getElementById("lb-counter");
       const stage   = document.getElementById("lb-stage");
@@ -821,10 +829,30 @@
       let sectionName = "";
       let lastFocus = null;
 
+      function isVideo(path) { return /\.(mp4|webm|mov)$/i.test(path); }
+
+      function stopVideo() {
+        video.pause();
+        video.removeAttribute("src");
+        video.load();
+      }
+
       function render() {
         if (!images.length) return;
-        img.src = images[index];
-        img.alt = sectionName + " – صورة " + (index + 1);
+        const src = encodeURI(images[index]);
+        if (isVideo(images[index])) {
+          img.hidden = true;
+          img.removeAttribute("src");
+          video.hidden = false;
+          video.src = src;
+          video.setAttribute("aria-label", sectionName + " – فيديو " + (index + 1));
+        } else {
+          stopVideo();
+          video.hidden = true;
+          img.hidden = false;
+          img.src = src;
+          img.alt = sectionName + " – صورة " + (index + 1);
+        }
         counter.textContent = (index + 1) + " / " + images.length;
       }
 
@@ -837,7 +865,7 @@
         title.textContent = name;
         lb.classList.toggle("is-empty", images.length === 0);
         lb.classList.toggle("single", images.length === 1);
-        if (images.length) render(); else { img.removeAttribute("src"); counter.textContent = ""; }
+        if (images.length) render(); else { img.removeAttribute("src"); stopVideo(); video.hidden = true; counter.textContent = ""; }
 
         lb.classList.add("show");
         document.body.classList.add("lb-open");
@@ -848,6 +876,7 @@
         lb.classList.remove("show");
         document.body.classList.remove("lb-open");
         img.removeAttribute("src");
+        stopVideo();
         if (lastFocus) lastFocus.focus();
       }
 
