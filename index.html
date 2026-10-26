@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>لوليتا – Lolita</title>
+  <meta name="description" content="لوليتا – متجر متخصص في فساتين البنات والأطفال للمناسبات والخروجات والأعياد وأعياد الميلاد والحفلات والتصوير.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #f6d7e0;
+      --pink-deep: #e9a8bd;
+      --offwhite: #fbf7f4;
+      --mauve: #d9c6e6;
+      --mauve-deep: #9b7fb5;
+      --ink: #2b2430;
+      --muted: #6e6375;
+      --card: #ffffff;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
+      background: var(--offwhite);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    body.lb-open { overflow: hidden; }
+
+    .wrap {
+      width: 100%;
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* ===== الهيدر ===== */
+    .hero {
+      background: linear-gradient(160deg, var(--pink) 0%, var(--offwhite) 55%, var(--mauve) 100%);
+      padding: 48px 0 40px;
+      text-align: center;
+    }
+
+    .brand {
+      margin: 0;
+      font-size: 2.6rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    .brand .latin {
+      display: block;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--mauve-deep);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .slogan {
+      margin: 20px 0 10px;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--mauve-deep);
+    }
+
+    .about {
+      margin: 0 auto;
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .sale {
+      display: inline-block;
+      margin-top: 24px;
+      background: var(--ink);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .sale strong {
+      color: var(--pink-deep);
+      font-size: 1.25rem;
+    }
+
+    /* ===== الأقسام ===== */
+    section { padding: 44px 0; }
+
+    h2 {
+      margin: 0 0 22px;
+      font-size: 1.6rem;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    h2::after {
+      content: "";
+      display: block;
+      width: 56px;
+      height: 4px;
+      margin: 10px auto 0;
+      border-radius: 4px;
+      background: var(--pink-deep);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid #f0e4ea;
+      border-radius: var(--radius);
+      padding: 18px 18px 16px;
+      box-shadow: 0 4px 14px rgba(155, 127, 181, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(155, 127, 181, 0.18);
+      border-color: var(--pink-deep);
+      outline: none;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      flex: 1;
+    }
+
+    .price {
+      margin-top: 8px;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--mauve-deep);
+    }
+
+    .price small {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .hint {
+      margin-top: 4px;
+      font-size: 0.8rem;
+      color: var(--mauve-deep);
+      font-weight: 600;
+    }
+
+    .hint::before {
+      content: "📷 ";
+    }
+
+    /* ===== المواعيد والعنوان ===== */
+    .info {
+      background: var(--card);
+      border-top: 1px solid #f0e4ea;
+      border-bottom: 1px solid #f0e4ea;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .info-box {
+      background: var(--offwhite);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      text-align: center;
+    }
+
+    .info-box h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--mauve-deep);
+    }
+
+    .info-box .big {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .info-box .note {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* ===== الفوتر ===== */
+    footer {
+      padding: 26px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* ===== المعرض (lightbox) ===== */
+    .lb {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(43, 36, 48, 0.92);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .lb.show { display: flex; }
+
+    .lb-head {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      color: #fff;
+      gap: 12px;
+    }
+
+    .lb-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin: 0;
+    }
+
+    .lb-counter {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .lb-btn {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      border: 0;
+      border-radius: 999px;
+      width: 44px;
+      height: 44px;
+      font-size: 1.4rem;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+    }
+
+    .lb-btn:hover,
+    .lb-btn:focus-visible { background: rgba(255, 255, 255, 0.28); outline: none; }
+
+    .lb-stage {
+      width: 100%;
+      max-width: 900px;
+      height: 100%;
+      max-height: calc(100vh - 150px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      touch-action: pan-y;
+    }
+
+    .lb-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .lb-empty {
+      display: none;
+      background: var(--card);
+      color: var(--ink);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      text-align: center;
+      max-width: 360px;
+    }
+
+    .lb-empty strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+    }
+
+    .lb-empty span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .lb.is-empty .lb-img,
+    .lb.is-empty .lb-nav,
+    .lb.is-empty .lb-counter { display: none; }
+
+    .lb.is-empty .lb-empty { display: block; }
+
+    .lb-nav {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      padding: 14px;
+    }
+
+    .lb.single .lb-nav { display: none; }
+
+    @media (min-width: 900px) {
+      .lb-nav {
+        bottom: auto;
+        top: 50%;
+        transform: translateY(-50%);
+        justify-content: space-between;
+        padding: 0 12px;
+        pointer-events: none;
+      }
+      .lb-nav .lb-btn { pointer-events: auto; width: 52px; height: 52px; }
+    }
+
+    /* ===== الشاشات الأكبر ===== */
+    @media (min-width: 600px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .info-grid { grid-template-columns: repeat(2, 1fr); }
+      .brand { font-size: 3.2rem; }
+    }
+
+    @media (min-width: 900px) {
+      .grid { grid-template-columns: repeat(4, 1fr); }
+      .hero { padding: 72px 0 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="wrap">
+      <h1 class="brand">
+        لوليتا
+        <span class="latin">Lolita</span>
+      </h1>
+      <p class="slogan">لوليتا… فرحتك في كل فستان</p>
+      <p class="about">
+        متجر متخصص في فساتين البنات والأطفال للمناسبات والخروجات والأعياد وأعياد الميلاد والحفلات والتصوير.
+      </p>
+      <div class="sale">سيل: أي حاجة بـ <strong>700 جنيه</strong></div>
+    </div>
+  </header>
+
+  <main>
+    <section id="products">
+      <div class="wrap">
+        <h2>الأقسام</h2>
+        <div class="grid">
+
+          <article class="card" data-gallery="daily" role="button" tabindex="0">
+            <h3>فساتين يومية</h3>
+            <p>تصميمات مريحة وخفيفة للزيارات والخروجات.</p>
+            <div class="price">700 <small>جنيه</small></div>
+            <div class="hint">اضغط لعرض الصور</div>
+          </article>
+
+          <article class="card" data-gallery="occasions" role="button" tabindex="0">
+            <h3>فساتين مناسبات</h3>
+            <p>فساتين أنيقة للأفراح والمناسبات العائلية.</p>
+            <div class="price">700 <small>جنيه</small></div>
+            <div class="hint">اضغط لعرض الصور</div>
+          </article>
+
+          <article class="card" data-gallery="birthday" role="button" tabindex="0">
+            <h3>فساتين أعياد الميلاد</h3>
+            <p>موديلات مرحة وألوان مبهجة لحفلات الميلاد.</p>
+            <div class="price">700 <small>جنيه</small></div>
+            <div class="hint">اضغط لعرض الصور</div>
+          </article>
+
+          <article class="card" data-gallery="eid" role="button" tabindex="0">
+            <h3>فساتين العيد</h3>
+            <p>تشكيلة موسمية بألوان وتصميمات احتفالية.</p>
+            <div class="price">700 <small>جنيه</small></div>
+            <div class="hint">اضغط لعرض الصور</div>
+          </article>
+
+          <article class="card" data-gallery="summer" role="button" tabindex="0">
+            <h3>فساتين صيفية</h3>
+            <p>خامات خفيفة وألوان فاتحة.</p>
+            <div class="price">700 <small>جنيه</small></div>
+            <div class="hint">اضغط لعرض الصور</div>
+          </article>
+
+          <article class="card" data-gallery="winter" role="button" tabindex="0">
+            <h3>فساتين شتوية</h3>
+            <p>أكمام طويلة وخامات أثقل مع إمكانية التنسيق مع جاكيت.</p>
+            <div class="price">700 <small>جنيه</small></div>
+            <div class="hint">اضغط لعرض الصور</div>
+          </article>
+
+          <article class="card" data-gallery="sisters" role="button" tabindex="0">
+            <h3>فساتين للأخوات</h3>
+            <p>موديلات متناسقة في اللون أو التصميم بمقاسات مختلفة.</p>
+            <div class="price">700 <small>جنيه</small></div>
+            <div class="hint">اضغط لعرض الصور</div>
+          </article>
+
+          <article class="card" data-gallery="accessories" role="button" tabindex="0">
+            <h3>إكسسوارات</h3>
+            <p>فيونكات وأطواق شعر وحقائب صغيرة وأحزمة مناسبة للأطفال.</p>
+            <div class="price">700 <small>جنيه</small></div>
+            <div class="hint">اضغط لعرض الصور</div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="info" id="visit">
+      <div class="wrap">
+        <h2>زورونا</h2>
+        <div class="info-grid">
+
+          <div class="info-box">
+            <h3>المواعيد</h3>
+            <p class="big">من 3 إلى 9</p>
+            <p class="note">كل يوم</p>
+          </div>
+
+          <div class="info-box">
+            <h3>العنوان</h3>
+            <p class="big">بورسعيد</p>
+            <p class="note">شارع 13</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">لوليتا – Lolita</div>
+  </footer>
+
+  <!-- ===== نافذة المعرض ===== -->
+  <div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lb-title">
+    <div class="lb-head">
+      <button class="lb-btn" type="button" id="lb-close" aria-label="إغلاق">✕</button>
+      <p class="lb-title" id="lb-title"></p>
+      <span class="lb-counter" id="lb-counter"></span>
+    </div>
+
+    <div class="lb-stage" id="lb-stage">
+      <img class="lb-img" id="lb-img" src="" alt="">
+      <div class="lb-empty">
+        <strong>لسه مافيش صور لهذا القسم</strong>
+        <span>هتتضاف قريبًا</span>
+      </div>
+    </div>
+
+    <div class="lb-nav">
+      <button class="lb-btn" type="button" id="lb-prev" aria-label="الصورة السابقة">›</button>
+      <button class="lb-btn" type="button" id="lb-next" aria-label="الصورة التالية">‹</button>
+    </div>
+  </div>
+
+  <script>
+    /* =====================================================================
+       صور الأقسام
+       ---------------------------------------------------------------------
+       حط الصور في فولدر images/ جنب الملف ده، كل قسم في فولدره،
+       واكتب مسارات الصور هنا بالترتيب اللي عايزه يظهر.
+
+       مثال لقسم «فساتين يومية» لو حطيت فيه 3 صور:
+         daily: ["images/daily/1.jpg", "images/daily/2.jpg", "images/daily/3.jpg"],
+
+       اسم الصورة حر (ممكن يكون بالعربي)، بس لازم يطابق اللي على الجهاز بالظبط.
+       القسم اللي مصفوفته فاضية [] بيظهر رسالة «لسه مافيش صور».
+       ===================================================================== */
+    const GALLERY = {
+      daily:       [],   // فساتين يومية        → images/daily/
+      occasions:   [],   // فساتين مناسبات      → images/occasions/
+      birthday:    [],   // فساتين أعياد الميلاد → images/birthday/
+      eid:         [],   // فساتين العيد         → images/eid/
+      summer:      [],   // فساتين صيفية         → images/summer/
+      winter:      [],   // فساتين شتوية         → images/winter/
+      sisters:     [],   // فساتين للأخوات       → images/sisters/
+      accessories: [],   // إكسسوارات            → images/accessories/
+    };
+
+    /* ===== من هنا لتحت مفيش حاجة محتاجة تعديل ===== */
+    (function () {
+      const lb      = document.getElementById("lightbox");
+      const img     = document.getElementById("lb-img");
+      const title   = document.getElementById("lb-title");
+      const counter = document.getElementById("lb-counter");
+      const stage   = document.getElementById("lb-stage");
+      const btnClose = document.getElementById("lb-close");
+      const btnPrev  = document.getElementById("lb-prev");
+      const btnNext  = document.getElementById("lb-next");
+
+      let images = [];
+      let index = 0;
+      let sectionName = "";
+      let lastFocus = null;
+
+      function render() {
+        if (!images.length) return;
+        img.src = images[index];
+        img.alt = sectionName + " – صورة " + (index + 1);
+        counter.textContent = (index + 1) + " / " + images.length;
+      }
+
+      function open(key, name, trigger) {
+        images = Array.isArray(GALLERY[key]) ? GALLERY[key] : [];
+        index = 0;
+        sectionName = name;
+        lastFocus = trigger;
+
+        title.textContent = name;
+        lb.classList.toggle("is-empty", images.length === 0);
+        lb.classList.toggle("single", images.length === 1);
+        if (images.length) render(); else { img.removeAttribute("src"); counter.textContent = ""; }
+
+        lb.classList.add("show");
+        document.body.classList.add("lb-open");
+        btnClose.focus();
+      }
+
+      function close() {
+        lb.classList.remove("show");
+        document.body.classList.remove("lb-open");
+        img.removeAttribute("src");
+        if (lastFocus) lastFocus.focus();
+      }
+
+      function next() { if (images.length > 1) { index = (index + 1) % images.length; render(); } }
+      function prev() { if (images.length > 1) { index = (index - 1 + images.length) % images.length; render(); } }
+
+      // الكروت
+      document.querySelectorAll(".card[data-gallery]").forEach(function (card) {
+        const key = card.getAttribute("data-gallery");
+        const name = card.querySelector("h3").textContent.trim();
+        card.addEventListener("click", function () { open(key, name, card); });
+        card.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(key, name, card); }
+        });
+      });
+
+      // الأزرار
+      btnClose.addEventListener("click", close);
+      btnNext.addEventListener("click", next);
+      btnPrev.addEventListener("click", prev);
+
+      // الضغط على الخلفية يقفل
+      lb.addEventListener("click", function (e) {
+        if (e.target === lb || e.target === stage) close();
+      });
+
+      // الكيبورد (في RTL السهم اليسار = التالي)
+      document.addEventListener("keydown", function (e) {
+        if (!lb.classList.contains("show")) return;
+        if (e.key === "Escape") close();
+        else if (e.key === "ArrowLeft") next();
+        else if (e.key === "ArrowRight") prev();
+      });
+
+      // السحب باللمس على الموبايل
+      let touchX = null;
+      stage.addEventListener("touchstart", function (e) { touchX = e.changedTouches[0].clientX; }, { passive: true });
+      stage.addEventListener("touchend", function (e) {
+        if (touchX === null) return;
+        const dx = e.changedTouches[0].clientX - touchX;
+        touchX = null;
+        if (Math.abs(dx) < 40) return;
+        // في RTL: السحب لليمين = الصورة التالية
+        if (dx > 0) next(); else prev();
+      }, { passive: true });
+    })();
+  </script>
+
+</body>
+</html>
